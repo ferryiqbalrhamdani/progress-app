@@ -5,6 +5,7 @@ namespace App\Livewire\Data;
 use App\Models\Admin;
 use App\Models\Bobot;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;
@@ -20,6 +21,7 @@ class Kontrak extends Component
     public $id_delete_project;
     public $id_project;
     public $id_pic;
+    public $pic_handle = NULL;
 
     public $perPage = 5;
     public $sortField = 'created_at';
@@ -55,6 +57,7 @@ class Kontrak extends Component
     {
         $data = Admin::where('id', $id)->first();
         $pic = $data->user()->first();
+        $pic_handle = $data->picHandle()->first();
 
         $this->id_project = $data->id;
 
@@ -62,6 +65,11 @@ class Kontrak extends Component
         $this->percentage_kontrak = $data->percentage_kontrak;
         $this->no_up = $data->no_up;
         $this->pic = $pic->nama;
+        if ($pic_handle != null) {
+            $this->pic_handle = $pic_handle->nama;
+        } else {
+            $this->pic_handle = '';
+        }
 
         $this->usul_pesanan = $data->usul_pesanan;
         $this->sprinada = $data->sprinada;
@@ -196,6 +204,7 @@ class Kontrak extends Component
         }
 
         Admin::where('id', $this->id_project)->update([
+            'pic_handle' => Auth::user()->id,
             'usul_pesanan' => (int)$this->usul_pesanan,
             'usul_pesanan_tgl' => $tgl_usul_pesanan,
             'sprinada' => (int)$this->sprinada,
@@ -264,10 +273,12 @@ class Kontrak extends Component
     //     // dd($this->usul_pesanan);
     // }
 
+
     public function lihatData($id)
     {
         $data = Admin::where('id', $id)->first();
         $pic = $data->user()->first();
+        $pic_handle = $data->picHandle()->first();
 
         $this->id_project = $data->id;
 
@@ -275,6 +286,11 @@ class Kontrak extends Component
         $this->percentage_kontrak = $data->percentage_kontrak;
         $this->no_up = $data->no_up;
         $this->pic = $pic->nama;
+        if ($pic_handle != null) {
+            $this->pic_handle = $pic_handle->nama;
+        } else {
+            $this->pic_handle = '';
+        }
 
         $this->usul_pesanan = $data->usul_pesanan;
         $this->sprinada = $data->sprinada;

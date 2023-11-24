@@ -94,6 +94,9 @@ Kontrak
                                         @foreach ($p->user()->get() as $user)
                                         <span class="badge badge-dark">{{$user->nama }}</span>
                                         @endforeach
+                                        @foreach ($p->picHandle()->get() as $pic)
+                                        <span class="badge badge-dark">{{$pic->nama }}</span>
+                                        @endforeach
                                     </td>
                                     <td>
                                         {{$p->no_up }}
@@ -111,8 +114,14 @@ Kontrak
                                     <td class="text-center">
                                         <button wire:click='lihatData({{$p->id}})' class="btn btn-sm btn-secondary">
                                             <i class="far fa-eye"></i> lihat data</button>
-                                        <button wire:click='inputData({{$p->id}})' class="btn btn-sm btn-primary">
-                                            <i class="far fa-edit"></i> ubah data</button>
+                                        <button @if($p->pic_handle != NULL)
+                                            @if($pic->id != Auth::user()->id)
+                                            disabled
+                                            @endif
+                                            @endif
+                                            wire:click='inputData({{$p->id}})'
+                                            class="btn btn-sm btn-primary">
+                                            <i class="far fa-edit"></i>ubah data</button>
                                     </td>
                                 </tr>
                                 @endforeach
