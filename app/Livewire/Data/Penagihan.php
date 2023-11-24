@@ -8,6 +8,7 @@ use App\Models\DpAdmin;
 use App\Models\TerminAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -53,6 +54,7 @@ class Penagihan extends Component
         $tgl_bast;
 
     public $id_project;
+    public $pic_penagihan = NULL;
 
     public $nama_pengadaan, $no_up, $pic, $indexTermin;
 
@@ -115,7 +117,15 @@ class Penagihan extends Component
 
         $pic_data = Admin::where('id', $this->id_project)->first();
         $pic = $pic_data->user()->first();
+        $pic_penagihan = $pic_data->picPenagihan()->first();
 
+        if ($pic_penagihan != null) {
+            $this->pic_penagihan = $pic_penagihan->nama;
+        } else {
+            $this->pic_penagihan = '';
+        }
+
+        // $this->pic_penagihan = 'saya raja';
         // dd($pic);
 
         $this->pic = $pic->nama;
@@ -156,6 +166,13 @@ class Penagihan extends Component
 
         $data = Admin::where('id', $this->id_project)->first();
         $pic = $data->user()->first();
+        $pic_penagihan = $data->picPenagihan()->first();
+
+        if ($pic_penagihan != null) {
+            $this->pic_penagihan = $pic_penagihan->nama;
+        } else {
+            $this->pic_penagihan = '';
+        }
 
         $this->pic = $pic->nama;
         $this->no_up = $data->no_up;
@@ -372,6 +389,7 @@ class Penagihan extends Component
 
 
         Admin::where('id', $this->id_project)->update([
+            'pic_penagihan' => Auth::user()->id,
             'simb' => $this->simb_display,
             'simb_tgl' => $simb_tgl,
             'sppm' => $this->sppm_display,
@@ -465,6 +483,13 @@ class Penagihan extends Component
         $dataSatu = Admin::where('id', $this->id_project)->first();
         $data = $dataSatu->dpPenagihan()->first();
         $pic = $dataSatu->user()->first();
+        $pic_penagihan = $dataSatu->picPenagihan()->first();
+
+        if ($pic_penagihan != null) {
+            $this->pic_penagihan = $pic_penagihan->nama;
+        } else {
+            $this->pic_penagihan = '';
+        }
 
         $this->pic = $pic->nama;
         $this->no_up = $dataSatu->no_up;
@@ -506,6 +531,13 @@ class Penagihan extends Component
         $dataSatu = Admin::where('id', $this->id_project)->first();
         $data = DpAdmin::where('project_id', $this->id_project)->first();
         $pic = $dataSatu->user()->first();
+        $pic_penagihan = $dataSatu->picPenagihan()->first();
+
+        if ($pic_penagihan != null) {
+            $this->pic_penagihan = $pic_penagihan->nama;
+        } else {
+            $this->pic_penagihan = '';
+        }
 
         $this->pic = $pic->nama;
         $this->no_up = $dataSatu->no_up;
@@ -708,6 +740,10 @@ class Penagihan extends Component
             'bobot' => $bobot,
         ]);
 
+        Admin::where('id', $this->id_project)->update([
+            'pic_penagihan' => Auth::user()->id,
+        ]);
+
         if ($percentage_penagihan == 100) {
             Bobot::where('project_id', $this->id_project)->update([
                 'bobot_penagihan' => 10,
@@ -748,6 +784,13 @@ class Penagihan extends Component
         $this->id_project = $dataTermin->project_id;
         $data = Admin::where('id', $this->id_project)->first();
         $pic = $data->user()->first();
+        $pic_penagihan = $data->picPenagihan()->first();
+
+        if ($pic_penagihan != null) {
+            $this->pic_penagihan = $pic_penagihan->nama;
+        } else {
+            $this->pic_penagihan = '';
+        }
 
         $this->pic = $pic->nama;
         $this->no_up = $data->no_up;
@@ -789,6 +832,13 @@ class Penagihan extends Component
         $this->id_project = $dataTermin->project_id;
         $data = Admin::where('id', $this->id_project)->first();
         $pic = $data->user()->first();
+        $pic_penagihan = $data->picPenagihan()->first();
+
+        if ($pic_penagihan != null) {
+            $this->pic_penagihan = $pic_penagihan->nama;
+        } else {
+            $this->pic_penagihan = '';
+        }
 
         $this->pic = $pic->nama;
         $this->no_up = $data->no_up;
@@ -975,11 +1025,15 @@ class Penagihan extends Component
             // 'percentage' => $total_percentage,
         ]);
 
+
         $termin = TerminAdmin::where('id', $this->id_termin)->first();
         $id = $termin->project_id;
         $this->id_project = $id;
 
 
+        Admin::where('id', $id)->update([
+            'pic_penagihan' => Auth::user()->id,
+        ]);
 
 
         if ($percentage_penagihan == 100) {
@@ -1016,6 +1070,7 @@ class Penagihan extends Component
 
     public function closeData()
     {
+        $this->pic_penagihan = NULL;
         $this->pic = '';
         $this->no_up = '';
         $this->nama_pengadaan = '';

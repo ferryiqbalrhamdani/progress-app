@@ -28,7 +28,12 @@
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
-                            <td style="text-transform: capitalize">{{ $pic }}</td>
+                            <td style="text-transform: capitalize">
+                                {{ $pic }}
+                                @if($pic_penagihan != NULL)
+                                , {{$pic_penagihan}}
+                                @endif</td>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -359,7 +364,11 @@
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
-                            <td style="text-transform: capitalize">{{ $pic }}</td>
+                            <td style="text-transform: capitalize">{{ $pic }}
+                                @if($pic_penagihan != NULL)
+                                , {{$pic_penagihan}}
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -512,7 +521,11 @@
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
-                            <td style="text-transform: capitalize">{{ $pic }}</td>
+                            <td style="text-transform: capitalize">{{ $pic }}
+                                @if($pic_penagihan != NULL)
+                                , {{$pic_penagihan}}
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -640,7 +653,11 @@
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
-                            <td style="text-transform: capitalize">{{ $pic }}</td>
+                            <td style="text-transform: capitalize">{{ $pic }}
+                                @if($pic_penagihan != NULL)
+                                , {{$pic_penagihan}}
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -919,7 +936,11 @@
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
-                            <td style="text-transform: capitalize">{{ $pic }}</td>
+                            <td style="text-transform: capitalize">{{ $pic }}
+                                @if($pic_penagihan != NULL)
+                                , {{$pic_penagihan}}
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -1033,7 +1054,11 @@
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
-                            <td style="text-transform: capitalize">{{ $pic }}</td>
+                            <td style="text-transform: capitalize">{{ $pic }}
+                                @if($pic_penagihan != NULL)
+                                , {{$pic_penagihan}}
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>

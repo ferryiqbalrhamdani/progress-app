@@ -805,6 +805,8 @@ class Project extends Component
 
         $data = Admin::where('id', $this->stepDua_id)->first();
         $data->update([
+            'pic_handle' => NULL,
+            'pic_penagihan' => NULL,
             'bebas_pajak' => $this->bebas_pajak,
             'status_pajak' => $this->pajak,
             'asal_brand' => $this->asal_brand,
@@ -980,6 +982,8 @@ class Project extends Component
 
 
         $data->update([
+            'pic_handle' => NULL,
+            'pic_penagihan' => NULL,
             'bebas_pajak' => $this->bebas_pajak,
             'status_pajak' => $this->pajak,
             'asal_brand' => $this->asal_brand,

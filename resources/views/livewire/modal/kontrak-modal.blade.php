@@ -153,7 +153,7 @@
                 <table class="table table-bordered table-hover bg-body-tertiary rounded shadow-sm "
                     style="color: black">
                     <tbody>
-                        <tr>
+                        <tr class="table-primary">
                             <th colspan="2"></th>
                             <th>Tanggal</th>
                         </tr>
