@@ -20,8 +20,8 @@ class Users extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $perPage = 5;
-    public $sortField = 'role_id';
-    public $sortDirection = 'asc';
+    public $sortField = 'created_at';
+    public $sortDirection = 'desc';
 
     public $id_user, $nama_role, $status, $successMessage;
 

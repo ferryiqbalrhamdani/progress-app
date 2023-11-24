@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Bobot;
 use App\Models\Pengiriman as ModelsPengiriman;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;
@@ -21,6 +22,7 @@ class Pengiriman extends Component
     public $id_project;
     public $id_pengiriman;
     public $id_pic;
+    public $pic_pengiriman = NULL;
 
     public $perPage = 5;
     public $sortField = 'created_at';
@@ -111,19 +113,6 @@ class Pengiriman extends Component
 
 
         $bobot_ba_anname_inname = 0;
-        // $bobot_tgl_pengiriman = 0;
-
-        // $data = Admin::where('id', $this->id_project)->first();
-        // $percentage = $data->percentage;
-
-
-        // // dd($this->jenis_pengiriman);
-
-        // if ($this->jenis_pengiriman == 'Lengkap' || $this->jenis_pengiriman == 'Bertahap') {
-        //     $bobot_jenis_Pengiriman = 16;
-        // } else {
-        //     $bobot_jenis_Pengiriman = 0;
-        // }
 
         if ($pengiriman == null) {
             $bobot_ba_anname_inname = 33;
@@ -131,20 +120,8 @@ class Pengiriman extends Component
             $bobot_ba_anname_inname = 0;
         }
 
-        // // dd($bobot_jenis_Pengiriman, $bobot_tgl_pengiriman);
-
 
         $percentage_pengiriman = $project->percentage_pengiriman + $bobot_ba_anname_inname;
-
-        // dd($project->percentage_pengiriman, $percentage_pengiriman);
-
-        // if ($percentage_pengiriman == 100) {
-        //     $total_percentage = $percentage + 20;
-        // } elseif ($percentage_pengiriman == 32) {
-        //     $total_percentage = $percentage - 0;
-        // } elseif ($percentage_pengiriman < 100) {
-        //     $total_percentage = $percentage - 20;
-        // }
 
         ModelsPengiriman::create([
             'id_project' => $id_project,
@@ -184,12 +161,11 @@ class Pengiriman extends Component
     public function hapusPengiriman($id)
     {
         $pengiriman = ModelsPengiriman::where('id', $id)->first();
-        $project = Admin::where('id', $pengiriman->id_project)->first();
-        $percentage_pengiriman = (int)$project->percentage_pengiriman;
-
-
 
         ModelsPengiriman::where('id', $id)->delete();
+
+        $project = Admin::where('id', $pengiriman->id_project)->first();
+        $percentage_pengiriman = (int)$project->percentage_pengiriman;
 
         $count = $project->pengiriman()->get();
 
@@ -217,6 +193,13 @@ class Pengiriman extends Component
     {
         $data = Admin::where('id', $id)->first();
         $pic = $data->user()->first();
+        $pic_pengiriman = $data->picPengiriman()->first();
+
+        if ($pic_pengiriman != null) {
+            $this->pic_pengiriman = $pic_pengiriman->nama;
+        } else {
+            $this->pic_pengiriman = '';
+        }
 
         $this->id_project = $data->id;
 
@@ -241,6 +224,13 @@ class Pengiriman extends Component
     {
         $data = Admin::where('id', $id)->first();
         $pic = $data->user()->first();
+        $pic_pengiriman = $data->picPengiriman()->first();
+
+        if ($pic_pengiriman != null) {
+            $this->pic_pengiriman = $pic_pengiriman->nama;
+        } else {
+            $this->pic_pengiriman = '';
+        }
         // dd($data->jenis_pengiriman);
 
         $this->id_project = $data->id;
@@ -265,6 +255,13 @@ class Pengiriman extends Component
     {
         $data = Admin::where('id', $id)->first();
         $pic = $data->user()->first();
+        $pic_pengiriman = $data->picPengiriman()->first();
+
+        if ($pic_pengiriman != null) {
+            $this->pic_pengiriman = $pic_pengiriman->nama;
+        } else {
+            $this->pic_pengiriman = '';
+        }
         // dd($data->jenis_pengiriman);
 
         $this->id_project = $data->id;
@@ -296,6 +293,13 @@ class Pengiriman extends Component
 
         $data = Admin::where('id', $id)->first();
         $pic = $data->user()->first();
+        $pic_pengiriman = $data->picPengiriman()->first();
+
+        if ($pic_pengiriman != null) {
+            $this->pic_pengiriman = $pic_pengiriman->nama;
+        } else {
+            $this->pic_pengiriman = '';
+        }
 
         $this->id_project = $data->id;
 
@@ -342,6 +346,7 @@ class Pengiriman extends Component
 
 
         Admin::where('id', $this->id_project)->update([
+            'pic_Pengiriman' => Auth::user()->id,
             'no_bast' => $this->no_bast,
             'tgl_bast' => $this->tgl_bast,
             'percentage_pengiriman' => $percentage_pengiriman,
@@ -487,10 +492,9 @@ class Pengiriman extends Component
                 $this->dispatch('show-confirm-modal');
             } else {
                 Admin::where('id', $this->id_project)->update([
+                    'pic_pengiriman' => Auth::user()->id,
                     'jenis_pengiriman' => $this->jenis_pengiriman,
                     'tgl_pengiriman' => $this->tgl_pengiriman,
-                    'percentage_pengiriman' => (int)$percentage_pengiriman,
-                    'percentage' => (int)$total_percentage,
                 ]);
 
                 $this->dispatch('hide-pengiriman-modal');
@@ -504,6 +508,7 @@ class Pengiriman extends Component
             }
         } else {
             Admin::where('id', $this->id_project)->update([
+                'pic_pengiriman' => Auth::user()->id,
                 'jenis_pengiriman' => $this->jenis_pengiriman,
                 'tgl_pengiriman' => $this->tgl_pengiriman,
                 'percentage_pengiriman' => (int)$percentage_pengiriman,

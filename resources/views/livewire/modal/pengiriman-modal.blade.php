@@ -28,7 +28,11 @@
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
-                            <td style="text-transform: capitalize">{{ $pic }}</td>
+                            <td style="text-transform: capitalize">{{ $pic }}
+                                @if($pic_pengiriman != NULL)
+                                , {{$pic_pengiriman}}
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -113,7 +117,11 @@
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
-                            <td style="text-transform: capitalize">{{ $pic }}</td>
+                            <td style="text-transform: capitalize">{{ $pic }}
+                                @if($pic_pengiriman != NULL)
+                                , {{$pic_pengiriman}}
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -364,7 +372,11 @@
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
-                            <td style="text-transform: capitalize">{{ $pic }}</td>
+                            <td style="text-transform: capitalize">{{ $pic }}
+                                @if($pic_pengiriman != NULL)
+                                , {{$pic_pengiriman}}
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -724,7 +736,11 @@
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
-                            <td style="text-transform: capitalize">{{ $pic }}</td>
+                            <td style="text-transform: capitalize">{{ $pic }}
+                                @if($pic_pengiriman != NULL)
+                                , {{$pic_pengiriman}}
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>

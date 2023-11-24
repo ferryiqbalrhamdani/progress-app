@@ -100,6 +100,9 @@ Pengiriman
                                         @foreach ($p->user()->get() as $user)
                                         <span class="badge badge-dark">{{$user->nama }}</span>
                                         @endforeach
+                                        @foreach ($p->picPengiriman()->get() as $pic)
+                                        <span class="badge badge-dark">{{$pic->nama }}</span>
+                                        @endforeach
                                     </td>
                                     <td>
                                         {{$p->no_up }}
@@ -116,18 +119,33 @@ Pengiriman
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <button wire:click='inputData({{$p->id}})' class="btn btn-sm btn-primary"
+                                        <button @if($p->pic_pengiriman != NULL)
+                                            @if($pic->id != Auth::user()->id)
+                                            disabled
+                                            @endif
+                                            @endif
+                                            wire:click='inputData({{$p->id}})' class="btn btn-sm btn-primary"
                                             data-toggle="tooltip" data-placement="left" title="Ubah data">
                                             <i class="far fa-edit"></i></button>
                                     </td>
                                     <td class="text-center">
-                                        <button wire:click='inputDataAnnameInname({{$p->id}})'
+                                        <button @if($p->pic_pengiriman != NULL)
+                                            @if($pic->id != Auth::user()->id)
+                                            disabled
+                                            @endif
+                                            @endif
+                                            wire:click='inputDataAnnameInname({{$p->id}})'
                                             class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="left"
                                             title="Ubah data">
                                             <i class="far fa-edit"></i></button>
                                     </td>
                                     <td class="text-center">
-                                        <button wire:click='inputDataBast({{$p->id}})' class="btn btn-sm btn-primary"
+                                        <button @if($p->pic_pengiriman != NULL)
+                                            @if($pic->id != Auth::user()->id)
+                                            disabled
+                                            @endif
+                                            @endif
+                                            wire:click='inputDataBast({{$p->id}})' class="btn btn-sm btn-primary"
                                             data-toggle="tooltip" data-placement="left" title="Ubah data">
                                             <i class="far fa-edit"></i></button>
                                     </td>

@@ -197,6 +197,12 @@ Marcendiser
                                         {{$p->no_up }}
                                     </td>
                                     <td>
+                                        {{$p->jenis_anggaran }}
+                                    </td>
+                                    <td>
+                                        {{$p->tahun_anggaran }}
+                                    </td>
+                                    <td>
                                         <div class="progress">
                                             <div class="progress-bar   @if($p->percentage_marcendiser == 100) bg-success @else progress-bar-striped progress-bar-animated @endif"
                                                 role="progressbar" style="width: {{$p->percentage_marcendiser}}%"

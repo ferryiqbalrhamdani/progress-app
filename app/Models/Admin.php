@@ -26,6 +26,7 @@ class Admin extends Model
         'pic_id',
         'pic_handle',
         'pic_penagihan',
+        'pic_pengiriman',
         'vendor_id',
         'description',
         'percentage',
@@ -125,6 +126,11 @@ class Admin extends Model
     public function picPenagihan(): BelongsTo
     {
         return $this->belongsTo(User::class, 'pic_penagihan', 'id');
+    }
+
+    public function picPengiriman(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'pic_pengiriman', 'id');
     }
 
     public function picHandle(): BelongsTo
