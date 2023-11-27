@@ -362,6 +362,11 @@ class Pengiriman extends Component
             ]);
         }
 
+        // $hasil = 20 * $percentage_pengiriman / 100;
+        // Bobot::where('project_id', $this->id_project)->update([
+        //     'bobot_pengiriman' => floor($hasil)
+        // ]);
+
         $this->dispatch('hide-bast-modal');
 
         $this->id_project = '';
@@ -544,6 +549,7 @@ class Pengiriman extends Component
                 $percentage_pengiriman = (int)$project->percentage_pengiriman;
             }
         }
+
         $project->update([
             'percentage_pengiriman' => (int)$percentage_pengiriman,
             'jenis_pengiriman' => $this->jenis_pengiriman,

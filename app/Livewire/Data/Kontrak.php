@@ -221,15 +221,21 @@ class Kontrak extends Component
             'percentage' => (int)$total_percentage,
         ]);
 
-        if (Admin::where('id', $this->id_project)->first()->percentage_kontrak == 100) {
-            $bobot->update([
-                'bobot_kontrak' => 20
-            ]);
-        } else {
-            $bobot->update([
-                'bobot_kontrak' => 0
-            ]);
-        }
+        // if (Admin::where('id', $this->id_project)->first()->percentage_kontrak == 100) {
+        //     $bobot->update([
+        //         'bobot_kontrak' => 20
+        //     ]);
+        // } else {
+        //     $bobot->update([
+        //         'bobot_kontrak' => 0
+        //     ]);
+        // }
+
+        $bobot_kontrak = 20 * $percentage_kontrak / 100;
+
+        $bobot->update([
+            'bobot_kontrak' => floor($bobot_kontrak)
+        ]);
 
         // dd($bobot->bobot_kontrak);
 

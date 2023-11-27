@@ -336,15 +336,19 @@ class Marcendiser extends Component
 
         ]);
 
-        if (Admin::where('id', $this->id_project)->first()->percentage_marcendiser == 100) {
-            $bobot->update([
-                'bobot_marcendiser' => 50
-            ]);
-        } else {
-            $bobot->update([
-                'bobot_marcendiser' => 0
-            ]);
-        }
+        // if (Admin::where('id', $this->id_project)->first()->percentage_marcendiser == 100) {
+        //     $bobot->update([
+        //         'bobot_marcendiser' => 50
+        //     ]);
+        // } else {
+        //     $bobot->update([
+        //         'bobot_marcendiser' => 0
+        //     ]);
+        // }
+        $bobot_marcendiser = 50 * $percentage_marcendiser / 100;
+        $bobot->update([
+            'bobot_marcendiser' => floor($bobot_marcendiser)
+        ]);
 
 
 

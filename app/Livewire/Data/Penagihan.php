@@ -414,16 +414,23 @@ class Penagihan extends Component
             'percentage' => $total_percentage,
         ]);
 
-        $dataProject = Admin::where('id', $this->id_project)->first();
-        if ($dataProject->percentage_penagihan == 100) {
-            Admin::where('id', $this->id_project)->update([
-                'bobot_penagihan' => 50,
-            ]);
-        } else {
-            Admin::where('id', $this->id_project)->update([
-                'bobot_penagihan' => 0,
-            ]);
-        }
+        // $dataProject = Admin::where('id', $this->id_project)->first();
+        // if ($dataProject->percentage_penagihan == 100) {
+        //     Admin::where('id', $this->id_project)->update([
+        //         'bobot_penagihan' => 50,
+        //     ]);
+        // } else {
+        //     Admin::where('id', $this->id_project)->update([
+        //         'bobot_penagihan' => 0,
+        //     ]);
+        // }
+
+        $bobot_penagihan = 50 * $percentage_penagihan / 100;
+
+        Admin::where('id', $this->id_project)->update([
+            'bobot_penagihan' => floor($bobot_penagihan),
+        ]);
+
 
         if ($data->payment_term == 'no') {
 
@@ -451,15 +458,21 @@ class Penagihan extends Component
             ]);
         }
 
-        if ($percentage_penagihan == 100) {
-            Bobot::where('project_id', $this->id_project)->update([
-                'bobot_penagihan' => 10,
-            ]);
-        } else {
-            Bobot::where('project_id', $this->id_project)->update([
-                'bobot_penagihan' => 0,
-            ]);
-        }
+        // if ($percentage_penagihan == 100) {
+        //     Bobot::where('project_id', $this->id_project)->update([
+        //         'bobot_penagihan' => 10,
+        //     ]);
+        // } else {
+        //     Bobot::where('project_id', $this->id_project)->update([
+        //         'bobot_penagihan' => 0,
+        //     ]);
+        // }
+
+        $bobot_penagihan = 10 * $percentage_penagihan / 100;
+
+        Bobot::where('project_id', $this->id_project)->update([
+            'bobot_penagihan' => floor($bobot_penagihan),
+        ]);
 
 
 
