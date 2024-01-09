@@ -32,17 +32,17 @@ class Dashboard extends Component
     #[Rule('required|alpha_dash')]
     public $vendor_id;
 
-    public function mount()
-    {
-        $project_chart = Admin::whereYear('created_at', Carbon::now()->year)->limit($this->limit)->get();
-        // dd($project_chart);
-        foreach ($project_chart as $p) {
-            $data['label'][] = $p->no_up;
-            $data['data'][] = (int)$p->nilai_kontrak;
-        }
-        $this->project_chart = json_encode($data);
-        // dd($this->project_chart);
-    }
+    // public function mount()
+    // {
+    //     $project_chart = Admin::whereYear('created_at', Carbon::now()->year)->limit($this->limit)->get();
+    //     // dd($project_chart);
+    //     foreach ($project_chart as $p) {
+    //         $data['label'][] = $p->no_up;
+    //         $data['data'][] = (int)$p->nilai_kontrak;
+    //     }
+    //     $this->project_chart = json_encode($data);
+    //     // dd($this->project_chart);
+    // }
 
     public function test()
     {

@@ -19,6 +19,7 @@ class Admin extends Model
         'no_up',
         'slug',
         'nama_pengadaan',
+        'jenis_lelang',
         'pt_id',
         'instansi_id',
         'jenis_anggaran',

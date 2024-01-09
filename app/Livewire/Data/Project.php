@@ -37,7 +37,7 @@ class Project extends Component
     public $id_pic;
     public $id_termin;
 
-    public $perPage = 5;
+    public $perPage = 6;
     public $sortField = 'created_at';
     public $sortDirection = 'desc';
 
@@ -55,7 +55,7 @@ class Project extends Component
     public $tahun_anggaran;
 
     #[Rule('required')]
-    public $nama_pt, $instansi, $jenis_anggaran, $pic, $vendor;
+    public $nama_pt, $instansi, $jenis_anggaran, $pic, $vendor, $jenis_lelang;
 
     public $desc, $percentage;
 
@@ -265,6 +265,7 @@ class Project extends Component
         $project = Admin::create([
             'no_up' => $this->no_up,
             'nama_pengadaan' => $this->nama_pengadaan,
+            'jenis_lelang' => $this->jenis_lelang,
             'pt_id' => $this->nama_pt,
             'instansi_id' => $this->instansi,
             'jenis_anggaran' => $this->jenis_anggaran,
@@ -305,6 +306,7 @@ class Project extends Component
             'jenis_anggaran' => 'required',
             'pic' => 'required',
             'selectedVendor' => 'required',
+            'jenis_lelang' => 'required',
         ]);
 
         $this->dispatch('show-project-modal');
@@ -332,6 +334,8 @@ class Project extends Component
         $this->stepSatu_pic = $pic->nama;
         $this->stepSatu_no_up = $data->no_up;
         $this->stepSatu_instansi = $instansi->name;
+
+        $this->jenis_lelang = $data->jenis_lelang;
 
         $this->dispatch('show-step-satu-modal');
         // dd($nama);
@@ -392,6 +396,7 @@ class Project extends Component
         $this->nama_pt = $data->pt_id;
         $this->pic = $data->pic_id;
         $this->no_up = $data->no_up;
+        $this->jenis_lelang = $data->jenis_lelang;
 
         $this->dispatch('show-ubah-step-satu-modal');
     }
@@ -407,6 +412,7 @@ class Project extends Component
         $this->nama_pt = '';
         $this->pic = '';
         $this->no_up = '';
+        $this->jenis_lelang = '';
         $this->data_vendor_admin = [];
     }
 
@@ -468,12 +474,14 @@ class Project extends Component
             'pic' => 'required',
             'instansi' => 'required',
             'jenis_anggaran' => 'required',
+            'jenis_lelang' => 'required',
 
         ]);
 
         $data->update([
             'pt_id' => $this->nama_pt,
             'instansi_id' => $this->instansi,
+            'jenis_lelang' => $this->jenis_lelang,
             'jenis_anggaran' => $this->jenis_anggaran,
             'tahun_anggaran' => $this->tahun_anggaran,
             'pic_id' => $this->pic,
@@ -1348,6 +1356,7 @@ class Project extends Component
 
 
         $this->stepDua_id = '';
+        $this->no_kontrak = '';
         $this->nama_pengadaan = '';
         $this->no_up = '';
         $this->id_project = '';

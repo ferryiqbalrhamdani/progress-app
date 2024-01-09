@@ -13,8 +13,9 @@
                 <div class="mb-3">
                     <p>Progress :</p>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: {{$percentage_pengiriman}}%"
-                            aria-valuenow="{{$percentage_pengiriman}}" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar"
+                            style="width: {{$percentage_pengiriman}}%" aria-valuenow="{{$percentage_pengiriman}}"
+                            aria-valuemin="0" aria-valuemax="100">
                             {{$percentage_pengiriman}}%</div>
                     </div>
 
@@ -102,8 +103,9 @@
                 <div class="mb-3">
                     <p>Progress :</p>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: {{$percentage_pengiriman}}%"
-                            aria-valuenow="{{$percentage_pengiriman}}" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar"
+                            style="width: {{$percentage_pengiriman}}%" aria-valuenow="{{$percentage_pengiriman}}"
+                            aria-valuemin="0" aria-valuemax="100">
                             {{$percentage_pengiriman}}%</div>
                     </div>
 
@@ -721,8 +723,9 @@
                 <div class="mb-3">
                     <p>Progress :</p>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: {{$percentage_pengiriman}}%"
-                            aria-valuenow="{{$percentage_pengiriman}}" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar"
+                            style="width: {{$percentage_pengiriman}}%" aria-valuenow="{{$percentage_pengiriman}}"
+                            aria-valuemin="0" aria-valuemax="100">
                             {{$percentage_pengiriman}}%</div>
                     </div>
 
@@ -824,8 +827,8 @@
                                 style="color: black; white-space: nowrap">
                                 <thead>
                                     <tr>
-                                        <th class="table-danger" scope="col">No BA Inname</th>
-                                        <th class="table-danger" scope="col">Tgl BA Inname</th>
+                                        <th class="table-primary" scope="col">No BA Inname</th>
+                                        <th class="table-primary" scope="col">Tgl BA Inname</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -917,7 +920,7 @@
 
 <div wire:ignore.self class="modal fade" id="confirmModal" style="background: rgba(0, 0, 0, .5)" data-backdrop="static"
     style="color: black" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal" role="document">
         <div class="modal-content" style="color: black">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel"><b>Confirmation</b></h5>

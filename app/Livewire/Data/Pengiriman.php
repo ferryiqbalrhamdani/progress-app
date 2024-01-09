@@ -542,26 +542,26 @@ class Pengiriman extends Component
         // dd($count->count());
 
         // dd($pengiriman->id_project, $project->percentage_pengiriman, $count->count());
-        if ($count->count() == 0) {
-            if ($project->percentage_pengiriman == 65) {
-                $percentage_pengiriman = (int)$project->percentage_pengiriman - 33;
-            } else {
-                $percentage_pengiriman = (int)$project->percentage_pengiriman;
-            }
-        }
+        // if ($count->count() == 0) {
+        //     if ($project->percentage_pengiriman == 65) {
+        //         $percentage_pengiriman = (int)$project->percentage_pengiriman - 33;
+        //     } else {
+        //         $percentage_pengiriman = (int)$project->percentage_pengiriman;
+        //     }
+        // }
 
         $project->update([
-            'percentage_pengiriman' => (int)$percentage_pengiriman,
+            'percentage_pengiriman' => 32,
             'jenis_pengiriman' => $this->jenis_pengiriman,
             'no_bast' => NULL,
             'tgl_bast' => NULL,
         ]);
 
 
-        $this->dispatch('hide-confirm-modal');
-
         $this->id_project = '';
 
+
+        $this->dispatch('hide-confirm-modal');
         $this->dispatch('stepSatuUbah', [
             'title' => 'Data berhasil diubah, BA Anname & BA Inname berhasil dihapus.',
             'icon' => 'success',

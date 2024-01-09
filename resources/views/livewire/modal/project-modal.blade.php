@@ -64,6 +64,21 @@
                             </div>
                         </div>
                         <div class="form-outline mb-3">
+                            <div class="form-group">
+                                <label for="jenis_lelang">Jenis Lelang<span class="text-danger">*</span></label>
+                                <select class="form-control card-hover @error('jenis_lelang') is-invalid @enderror"
+                                    id="jenis_lelang" wire:model.live='jenis_lelang'>
+                                    <option></option>
+                                    <option value="Penunjukan Langsung">Penunjukan Langsung</option>
+                                    <option value="Lelang Tertutup">Lelang Tertutup</option>
+                                    <option value="e-Katalog">e-Katalog</option>
+                                    <option value="LPSE">LPSE</option>
+                                </select>
+                                <div>@error('jenis_lelang') <span class="text-danger"> {{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-outline mb-3">
                             <label class="form-label" for="no_up">No UP<span class="text-danger">*</span></label>
                             <input type="text" id="no_up"
                                 class="form-control card-hover @error('no_up') is-invalid @enderror"
@@ -211,6 +226,10 @@
                         style="color: black">
                         <tbody>
                             <tr>
+                                <th class="col-3">Jenis Lelalng</th>
+                                <td>{{ $jenis_lelang }}</td>
+                            </tr>
+                            <tr>
                                 <th class="col-3">No UP</th>
                                 <td>{{ $no_up }}</td>
                             </tr>
@@ -306,6 +325,10 @@
                         style="color: black">
                         <tbody>
                             <tr>
+                                <th class="col-3">Jenis Lelang</th>
+                                <td>{{ $jenis_lelang }}</td>
+                            </tr>
+                            <tr>
                                 <th class="col-3">No UP</th>
                                 <td>{{ $stepSatu_no_up }}</td>
                             </tr>
@@ -369,7 +392,7 @@
 {{-- modal view project --}}
 <div wire:ignore.self class="modal fade" id="viewProjectModal" data-backdrop="static" style="color: black"
     data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
         <div class="modal-content" style="color: black">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Detail Project</h5>
@@ -1228,6 +1251,19 @@
 
                         <div class="form-outline mb-3">
                             <div class="form-group">
+                                <label for="jenis_lelang">Jenis Lelang<span class="text-danger">*</span></label>
+                                <select class="form-control card-hover @error('jenis_lelang') is-invalid @enderror"
+                                    id="jenis_lelang" wire:model.live='jenis_lelang'>
+                                    <option></option>
+                                    <option value="Penunjukan Langsung">Penunjukan Langsung</option>
+                                    <option value="Lelang Tertutup">Lelang Tertutup</option>
+                                    <option value="e-Katalog">e-Katalog</option>
+                                    <option value="LPSE">LPSE</option>
+                                </select>
+                                <div>@error('jenis_lelang') <span class="text-danger"> {{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="nama_pt">Nama PT<span class="text-danger">*</span></label>
                                 <select class="form-control card-hover @error('nama_pt') is-invalid @enderror"
                                     id="nama_pt" wire:model.live='nama_pt'>
@@ -1525,7 +1561,7 @@
                                     </div>
                                     <div class="col-12 col-lg-7">
                                         @foreach ($sertifikat as $s)
-                                        @if($s->id == 4 || $s->id == 5 )
+                                        @if( $s->id == 4 || $s->id == 5 || $s->id == 7 || $s->id == 8 )
                                         <div class="form-check">
                                             <input @if($asal_brand=='import' ) disabled @endif class="form-check-input"
                                                 type="checkbox" wire:model.live='sertifikat_produk' value="{{$s->id}}"

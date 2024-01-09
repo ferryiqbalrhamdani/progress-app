@@ -485,6 +485,23 @@
             })
         })
     </script>
+    <script>
+        $(document).ready(function() {
+
+            // ...
+
+            // Enable Bootstrap tooltips on page load
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Ensure Livewire updates re-instantiate tooltips
+            if (typeof Livewire.dispatch !== 'undefined') {
+                Livewire.dispatch.hook('message.processed', (message, component) => {
+                    $('[data-toggle="tooltip"]').tooltip('dispose').tooltip();
+            });
+        }
+
+        });
+    </script>
     @stack('daftar-pt')
     @stack('daftar-pic')
     @stack('project')

@@ -280,14 +280,12 @@ class Marcendiser extends Component
         // dd($hasil);
 
         $this->validate([
-            'jumlah_item_production' => 'required|numeric|min:0',
-            'jumlah_ea_production' => 'required|numeric|min:0',
-            'etd_production' => 'required',
-            'jumlah_item_ready_stock' => 'required|numeric|min:0',
-            'jumlah_ea_ready_stock' => 'required|numeric|min:0',
+            'jumlah_item_production' => 'required|numeric|min:0|max:' . $this->jumlah_item,
+            'jumlah_ea_production' => 'required|numeric|min:0|max:' . $this->jumlah_ea,
+            'jumlah_item_ready_stock' => 'required|numeric|min:0|max:' . $this->jumlah_item,
+            'jumlah_ea_ready_stock' => 'required|numeric|min:0|max:' . $this->jumlah_ea,
             'jumlah_item_delivery' => 'required|numeric|min:0|max:' . $this->jumlah_item,
             'jumlah_ea_delivery' => 'required|numeric|min:0|max:' . $this->jumlah_ea,
-            'etd_delivery' => 'required',
             'jumlah_item_received' => 'required|numeric|min:0|max:' . $this->jumlah_item,
             'jumlah_ea_received' => 'required|numeric|min:0|max:' . $this->jumlah_ea,
         ]);

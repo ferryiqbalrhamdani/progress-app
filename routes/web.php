@@ -9,6 +9,7 @@ use App\Livewire\Data\Marcendiser;
 use App\Livewire\Data\Penagihan;
 use App\Livewire\Data\Pengiriman;
 use App\Livewire\Data\Project;
+use App\Livewire\Data\Project\DetailStep;
 use App\Livewire\Profile;
 use App\Livewire\Users;
 use App\Livewire\Utilities\DaftarInstansi;
@@ -43,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('daftar-vendor', DaftarVendor::class);
     Route::get('daftar-pic', DaftarPic::class);
     Route::get('project', Project::class);
+    Route::get('project/{slug}/detail-step', DetailStep::class);
 
     Route::get('kontrak', Kontrak::class);
     Route::get('pengiriman', Pengiriman::class);
