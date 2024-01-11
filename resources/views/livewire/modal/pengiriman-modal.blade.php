@@ -28,6 +28,18 @@
                             <td>{{ $no_up }}</td>
                         </tr>
                         <tr>
+                            <th class="col-3">Prioritas</th>
+                            <td>
+                                @if ($prioritas == 0)
+                                <span class="badge badge-dark">low</span>
+                                @elseif($prioritas == 1)
+                                <span class="badge badge-warning">warning</span>
+                                @elseif($prioritas == 2)
+                                <span class="badge badge-danger">urgent</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
                             <th class="col-3">PIC</th>
                             <td style="text-transform: capitalize">{{ $pic }}
                                 @if($pic_pengiriman != NULL)
@@ -116,6 +128,18 @@
                         <tr>
                             <th class="col-3">No UP</th>
                             <td>{{ $no_up }}</td>
+                        </tr>
+                        <tr>
+                            <th class="col-3">Prioritas</th>
+                            <td>
+                                @if ($prioritas == 0)
+                                <span class="badge badge-dark">low</span>
+                                @elseif($prioritas == 1)
+                                <span class="badge badge-warning">warning</span>
+                                @elseif($prioritas == 2)
+                                <span class="badge badge-danger">urgent</span>
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
@@ -371,6 +395,18 @@
                         <tr>
                             <th class="col-3">No UP</th>
                             <td>{{ $no_up }}</td>
+                        </tr>
+                        <tr>
+                            <th class="col-3">Prioritas</th>
+                            <td>
+                                @if ($prioritas == 0)
+                                <span class="badge badge-dark">low</span>
+                                @elseif($prioritas == 1)
+                                <span class="badge badge-warning">warning</span>
+                                @elseif($prioritas == 2)
+                                <span class="badge badge-danger">urgent</span>
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>
@@ -736,6 +772,18 @@
                         <tr>
                             <th class="col-3">No UP</th>
                             <td>{{ $no_up }}</td>
+                        </tr>
+                        <tr>
+                            <th class="col-3">Prioritas</th>
+                            <td>
+                                @if ($prioritas == 0)
+                                <span class="badge badge-dark">low</span>
+                                @elseif($prioritas == 1)
+                                <span class="badge badge-warning">warning</span>
+                                @elseif($prioritas == 2)
+                                <span class="badge badge-danger">urgent</span>
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <th class="col-3">PIC</th>

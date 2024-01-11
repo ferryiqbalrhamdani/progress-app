@@ -46,6 +46,15 @@ Pengiriman
                             <thead class="table-primary">
                                 <tr>
                                     <th class="">
+                                        Prioritas
+                                        <span wire:click="sortBy('prioritas')" style="cursor: pointer; font-size: 10px">
+                                            <i
+                                                class="fa fa-arrow-up {{$sortField === 'prioritas' && $sortDirection === 'asc' ? '' : 'text-muted'}} "></i>
+                                            <i
+                                                class="fa fa-arrow-down {{$sortField === 'prioritas' && $sortDirection === 'desc' ? '' : 'text-muted'}}"></i>
+                                        </span>
+                                    </th>
+                                    <th class="">
                                         PIC
                                         <span wire:click="sortBy('pic_id')" style="cursor: pointer; font-size: 10px">
                                             <i
@@ -96,6 +105,16 @@ Pengiriman
                                 @else
                                 @foreach ($project as $p)
                                 <tr>
+                                    <td>
+                                        @if ($p->prioritas == 0)
+                                        <span class="badge badge-dark">low</span>
+                                        @elseif($p->prioritas == 1)
+                                        <span class="badge badge-warning">warning</span>
+                                        @elseif($p->prioritas == 2)
+                                        <span class="badge badge-danger">urgent</span>
+
+                                        @endif
+                                    </td>
                                     <td class="text-center" style="text-transform: capitalize">
                                         @foreach ($p->user()->get() as $user)
                                         <span class="badge badge-dark">{{$user->nama }}</span>
@@ -119,7 +138,7 @@ Pengiriman
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <button @if($p->pic_pengiriman != NULL)
+                                        <button wire:ignore.self @if($p->pic_pengiriman != NULL)
                                             @if($pic->id != Auth::user()->id)
                                             disabled
                                             @endif
@@ -129,7 +148,7 @@ Pengiriman
                                             <i class="far fa-edit"></i></button>
                                     </td>
                                     <td class="text-center">
-                                        <button @if($p->pic_pengiriman != NULL)
+                                        <button wire:ignore.self @if($p->pic_pengiriman != NULL)
                                             @if($pic->id != Auth::user()->id)
                                             disabled
                                             @endif
@@ -140,7 +159,7 @@ Pengiriman
                                             <i class="far fa-edit"></i></button>
                                     </td>
                                     <td class="text-center">
-                                        <button @if($p->pic_pengiriman != NULL)
+                                        <button wire:ignore.self @if($p->pic_pengiriman != NULL)
                                             @if($pic->id != Auth::user()->id)
                                             disabled
                                             @endif
@@ -150,8 +169,9 @@ Pengiriman
                                             <i class="far fa-edit"></i></button>
                                     </td>
                                     <td class="text-center">
-                                        <button wire:click='lihatData({{$p->id}})' class="btn btn-sm btn-secondary"
-                                            data-toggle="tooltip" data-placement="left" title="Lihat data">
+                                        <button wire:ignore.self wire:click='lihatData({{$p->id}})'
+                                            class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="left"
+                                            title="Lihat data">
                                             <i class="far fa-eye"></i></button>
                                     </td>
                                 </tr>

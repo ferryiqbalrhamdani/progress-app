@@ -43,7 +43,7 @@ class Pengiriman extends Component
     #[Rule('required|string')]
     public $percentage_pengiriman;
 
-    public $nama_pengadaan, $no_up, $pic;
+    public $nama_pengadaan, $no_up, $pic, $prioritas;
 
     public $jenis_pengiriman = 'lengkap';
     public $tgl_pengiriman;
@@ -78,7 +78,14 @@ class Pengiriman extends Component
         $status_tgl_baanname,
         $status_no_bainname,
         $status_tgl_bainname;
-
+    public function mount()
+    {
+        if (Admin::where('prioritas', '>', 0)->count() > 0) {
+            $this->sortField = "prioritas";
+        } else {
+            $this->sortField = "percentage";
+        }
+    }
 
     public function sortBy($sortField)
     {
@@ -122,6 +129,7 @@ class Pengiriman extends Component
 
 
         $percentage_pengiriman = $project->percentage_pengiriman + $bobot_ba_anname_inname;
+        $bobot_pengiriman = 20 * $percentage_pengiriman / 100;
 
         ModelsPengiriman::create([
             'id_project' => $id_project,
@@ -131,8 +139,16 @@ class Pengiriman extends Component
             'tgl_bainname' => $this->tgl_bainname,
         ]);
 
+        Bobot::where('project_id', $this->id_project)->update([
+            'bobot_pengiriman' => floor($bobot_pengiriman),
+        ]);
+
+        $bobot = Bobot::where('project_id', $this->id_project)->first();
+        $percentage = $bobot->bobot_kontrak + $bobot->bobot_penagihan + $bobot_pengiriman + $bobot->bobot_marcendiser;
+
         $project->update([
-            'percentage_pengiriman' => $percentage_pengiriman
+            'percentage_pengiriman' => $percentage_pengiriman,
+            'percentage' => $percentage,
         ]);
 
         $this->no_baanname = '';
@@ -180,7 +196,9 @@ class Pengiriman extends Component
             }
         }
         $project->update([
-            'percentage_pengiriman' => (int)$percentage_pengiriman
+            'percentage_pengiriman' => (int)$percentage_pengiriman,
+            'no_bast' => NULL,
+            'tgl_bast' => NULL,
         ]);
 
         $this->dispatch('hapusStepDua', [
@@ -204,6 +222,7 @@ class Pengiriman extends Component
         $this->id_project = $data->id;
 
         $this->nama_pengadaan = $data->nama_pengadaan;
+        $this->prioritas = $data->prioritas;
         $this->percentage_pengiriman = $data->percentage_pengiriman;
         $this->no_up = $data->no_up;
         $this->pic = $pic->nama;
@@ -236,6 +255,7 @@ class Pengiriman extends Component
         $this->id_project = $data->id;
 
         $this->nama_pengadaan = $data->nama_pengadaan;
+        $this->prioritas = $data->prioritas;
         $this->percentage_pengiriman = $data->percentage_pengiriman;
         $this->no_up = $data->no_up;
         $this->pic = $pic->nama;
@@ -267,6 +287,7 @@ class Pengiriman extends Component
         $this->id_project = $data->id;
 
         $this->nama_pengadaan = $data->nama_pengadaan;
+        $this->prioritas = $data->prioritas;
         $this->percentage_pengiriman = $data->percentage_pengiriman;
         $this->no_up = $data->no_up;
         $this->pic = $pic->nama;
@@ -304,6 +325,7 @@ class Pengiriman extends Component
         $this->id_project = $data->id;
 
         $this->nama_pengadaan = $data->nama_pengadaan;
+        $this->prioritas = $data->prioritas;
         $this->percentage_pengiriman = $data->percentage_pengiriman;
         $this->no_up = $data->no_up;
         $this->pic = $pic->nama;
@@ -331,7 +353,6 @@ class Pengiriman extends Component
         ]);
 
         $project = Admin::where('id', $this->id_project)->first();
-        $bobot = $project->bobot()->first();
         $no_bast = $project->no_bast;
         $tgl_bast = $project->tgl_bast;
 
@@ -366,6 +387,34 @@ class Pengiriman extends Component
         // Bobot::where('project_id', $this->id_project)->update([
         //     'bobot_pengiriman' => floor($hasil)
         // ]);
+
+        $data = Admin::where('id', $this->id_project)->first();
+        $bobot = $data->bobot()->first();
+        $total = $bobot->bobot_kontrak + $bobot->bobot_penagihan + $bobot->bobot_pengiriman + $bobot->bobot_marcendiser;
+
+
+        if (Carbon::parse($data->tgl_bast)->diffInMonths($data->jatuh_tempo) == 1) {
+            Admin::where('id', $this->id_project)->update(['prioritas' => 2]);
+        } elseif (Carbon::parse($data->tgl_bast)->diffInMonths($data->jatuh_tempo) == 2) {
+            Admin::where('id', $this->id_project)->update(['prioritas' => 1]);
+        } elseif (Carbon::parse($data->tgl_bast)->diffInMonths($data->jatuh_tempo) == 0) {
+            Admin::where('id', $this->id_project)->update(['prioritas' => 2]);
+        } else {
+            Admin::where('id', $this->id_project)->update(['prioritas' => 0]);
+        }
+
+        // dd(Carbon::parse($data->tgl_bast)->diffInMonths($data->jatuh_tempo));
+
+        if ($total == 100) {
+            $status = 1;
+        } else {
+            $status = 0;
+        }
+
+        Admin::where('id', $this->id_project)->update([
+            'percentage' => $total,
+            'status' => $status,
+        ]);
 
         $this->dispatch('hide-bast-modal');
 
@@ -459,19 +508,25 @@ class Pengiriman extends Component
         $bobot_tgl_pengiriman = 0;
 
         $data = Admin::where('id', $this->id_project)->first();
-        $percentage = $data->percentage;
+        $bobot = Bobot::where('project_id', $this->id_project)->first();
 
 
         // dd($this->jenis_pengiriman);
 
-        if ($this->jenis_pengiriman == 'Lengkap' || $this->jenis_pengiriman == 'Bertahap') {
-            $bobot_jenis_Pengiriman = 16;
+        if ($this->jenis_pengiriman == "Lengkap" || $this->jenis_pengiriman == "Bertahap") {
+            $bobot_jenis_Pengiriman = 50;
         } else {
             $bobot_jenis_Pengiriman = 0;
         }
 
+        // dd($this->jenis_pengiriman, $this->tgl_pengiriman);
+
         if ($this->tgl_pengiriman != null) {
-            $bobot_tgl_pengiriman = 16;
+            if ($this->tgl_pengiriman == $data->tgl_pengiriman) {
+                $bobot_tgl_pengiriman = 0;
+            } else {
+                $bobot_tgl_pengiriman = 50;
+            }
         } else {
             $bobot_tgl_pengiriman = 0;
         }
@@ -481,13 +536,16 @@ class Pengiriman extends Component
 
         $percentage_pengiriman = $bobot_jenis_Pengiriman + $bobot_tgl_pengiriman;
 
-        if ($percentage_pengiriman == 100) {
-            $total_percentage = $percentage + 20;
-        } elseif ($percentage_pengiriman == 32) {
-            $total_percentage = $percentage - 0;
-        } elseif ($percentage_pengiriman < 100) {
-            $total_percentage = $percentage - 20;
-        }
+        $total_percentage = 32 * $percentage_pengiriman / 100;
+
+        $bobot_pengiriman = 20 * $total_percentage / 100;
+
+        $total_bobot_pengiriman = floor($bobot_pengiriman) + $bobot->bobot_pengiriman;
+
+        Bobot::where('project_id', $this->id_project)->update([
+            'bobot_pengiriman' => $total_bobot_pengiriman
+        ]);
+
 
 
 
@@ -512,12 +570,15 @@ class Pengiriman extends Component
                 ]);
             }
         } else {
+            $bobot = Bobot::where('project_id', $this->id_project)->first();
+            $percentage = $bobot->bobot_kontrak + $bobot->bobot_penagihan + $total_bobot_pengiriman + $bobot->bobot_marcendiser;
+
             Admin::where('id', $this->id_project)->update([
                 'pic_pengiriman' => Auth::user()->id,
                 'jenis_pengiriman' => $this->jenis_pengiriman,
                 'tgl_pengiriman' => $this->tgl_pengiriman,
-                'percentage_pengiriman' => (int)$percentage_pengiriman,
-                'percentage' => (int)$total_percentage,
+                'percentage_pengiriman' => (int)$total_percentage,
+                'percentage' => (int)$percentage,
             ]);
 
             $this->dispatch('hide-pengiriman-modal');
@@ -537,25 +598,24 @@ class Pengiriman extends Component
     {
         $project = Admin::where('id', $this->id_project)->first();
         ModelsPengiriman::where('id_project', $this->id_project)->delete();
-        $count = $project->pengiriman()->get();
 
-        // dd($count->count());
 
-        // dd($pengiriman->id_project, $project->percentage_pengiriman, $count->count());
-        // if ($count->count() == 0) {
-        //     if ($project->percentage_pengiriman == 65) {
-        //         $percentage_pengiriman = (int)$project->percentage_pengiriman - 33;
-        //     } else {
-        //         $percentage_pengiriman = (int)$project->percentage_pengiriman;
-        //     }
-        // }
-
-        $project->update([
+        Admin::where('id', $this->id_project)->update([
             'percentage_pengiriman' => 32,
             'jenis_pengiriman' => $this->jenis_pengiriman,
             'no_bast' => NULL,
             'tgl_bast' => NULL,
+            'prioritas' => 0,
         ]);
+        // dd(Admin::where('id', $this->id_project)->first());
+
+        $data = Admin::where('id', $this->id_project)->first();
+        $bobot = Bobot::where('project_id', $this->id_project)->first();
+        $total_percentage = 32 * 100 / 100;
+        $bobot_pengiriman = 20 * $total_percentage / 100;
+        $percentage = $bobot->bobot_kontrak + $bobot->bobot_penagihan + $bobot_pengiriman + $bobot->bobot_marcendiser;
+        Bobot::where('project_id', $this->id_project)->update(['bobot_pengiriman' => $bobot_pengiriman]);
+        $data->update(['percentage' => $percentage]);
 
 
         $this->id_project = '';

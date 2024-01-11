@@ -419,6 +419,12 @@
                     style="color: black">
                     <tbody>
                         <tr>
+                            <th class="col-3">Jenis Lelang</th>
+                            <td>
+                                {{ $jenis_lelang }}
+                            </td>
+                        </tr>
+                        <tr>
                             <th class="col-3">No UP</th>
                             <td>{{ $stepSatu_no_up }}</td>
                         </tr>

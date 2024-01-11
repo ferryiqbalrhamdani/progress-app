@@ -17,5 +17,6 @@ class Bobot extends Model
         'bobot_penagihan',
         'bobot_pengiriman',
         'bobot_marcendiser',
+        'total_bobot',
     ];
 }

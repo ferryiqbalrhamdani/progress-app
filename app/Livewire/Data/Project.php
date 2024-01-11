@@ -38,7 +38,7 @@ class Project extends Component
     public $id_termin;
 
     public $perPage = 6;
-    public $sortField = 'created_at';
+    public $sortField = 'percentage';
     public $sortDirection = 'desc';
 
     #[Url()]
@@ -213,7 +213,11 @@ class Project extends Component
     {
         $this->data_vendor = Vendor::all();
         $this->data_vendor_updated = Vendor::all();
-        // $this->data_vendor_admin = Admin::where('id', $this->id_project)->first();
+        if (Admin::where('prioritas', '>', 0)->count() > 0) {
+            $this->sortField = "prioritas";
+        } else {
+            $this->sortField = "percentage";
+        }
     }
 
     public function show($field)
@@ -1582,6 +1586,7 @@ class Project extends Component
         $this->stepSatu_nama_pt = $pt->name;
         $this->stepSatu_pic = $pic->nama;
         $this->stepSatu_no_up = $data->no_up;
+        $this->jenis_lelang = $data->jenis_lelang;
 
         $this->stepDua_pic = $pic->nama;
         $this->stepDua_no_up = $data->no_up;
